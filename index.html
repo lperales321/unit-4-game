@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="assets/css/reset.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="javascript" href="assets/javascript/game.js">
+        <!-- <link rel="javascript" href="assets/javascript/game.js"> -->
 
         <!-- JQuery -->
         <script src="https://code.jquery.com/jquery.js"></script>
@@ -25,9 +25,58 @@
             <!-- Number to Guess -->
             <div class="row">
                 <div class="col-lg-3">
-                    <div class="card-body">
-                        <div class="text-center text-white bg-info">
-                            <h3 id="numberToGuess">32</h3>
+                    <div class="card">
+                        <h4 class="card-header">Number to Guess</h4>
+                        <div class="card-body">
+                            <div class="text-center" id="numberToGuess"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Score -->
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="card">
+                        <h4 class="card-header">Total Score</h4>
+                        <div class="card-body">
+                            <div class="text-center" id="totalScore"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Message -->
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="card">
+                        <h4 class="card-header">Instructions</h4>
+                        <div class="card-body">
+                            <div class="text-center" id="message"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Wins -->
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="card">
+                        <h4 class="card-header">Total Wins</h4>
+                        <div class="card-body">
+                            <div class="text-center" id="totalWins"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Losses -->
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="card">
+                        <h4 class="card-header">Total Losses</h4>
+                        <div class="card-body">
+                            <div class="text-center" id="totalLosses"></div>
                         </div>
                     </div>
                 </div>
@@ -35,10 +84,91 @@
 
             <!-- Crystals Images -->
             <div class="row">
-                <div class="col-lg-12">Crystals</div>
+                <div class="col-lg-3">
+                    <button id="crystal1">Crystal 1</button>
+                </div>
+                <div class="col-lg-3">
+                    <button id="crystal2">Crystal 2</button>
+                </div>
+                <div class="col-lg-3">
+                    <button id="crystal3">Crystal 3</button>
+                </div>
+                <div class="col-lg-3">
+                    <button id="crystal4">Crystal 4</button>
+                </div>
             </div>
-
-            
         </div>
+
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+
+            let numberToGuess = 0;
+            let totalScore = 0;
+            let totalWins = 0;
+            let totalLosses = 0;
+            let crystal1Value = 0;
+            let crystal2Value = 0;
+            let crystal3Value = 0;
+            let crystal4Value = 0;
+
+            resetGame();
+
+
+            function resetGame() {
+                //Choose random number from 19-120
+                numberToGuess = Math.floor(Math.random() * (121 - 19) ) + 19;
+                $('#numberToGuess').text(numberToGuess);
+
+                //Total Scores
+                totalScore = 0;
+                $('#totalScore').text(totalScore);
+                $('#totalWins').text(totalWins);
+                $('#totalLosses').text(totalLosses);
+
+                //Choose random number from 1-12
+                crystal1Value = Math.ceil(Math.random() * 12);
+                crystal2Value = Math.ceil(Math.random() * 12);
+                crystal3Value = Math.ceil(Math.random() * 12);
+                crystal4Value = Math.ceil(Math.random() * 12);
+            }
+
+            function calculateNewScore(crystalValue) {
+                totalScore += crystalValue;
+                $('#totalScore').text(totalScore);
+                isAMatch();
+            }
+
+            function isAMatch() {
+                if (numberToGuess - totalScore == 0) {
+                    totalWins++;
+                    $('#message').text("Congratulations!");
+                    resetGame();
+                }
+                else if (numberToGuess - totalScore < 0) {
+                    totalLosses++;
+                    $('#message').text("Game Over!");
+                    resetGame();
+                }
+            };
+
+            $('#crystal1').on("click", function(){
+                calculateNewScore(crystal1Value);
+            });
+
+            $('#crystal2').on("click", function(){
+                calculateNewScore(crystal2Value);
+            });
+
+            $('#crystal3').on("click", function(){
+                calculateNewScore(crystal3Value);
+            });
+
+            $('#crystal4').on("click", function(){
+                calculateNewScore(crystal4Value);
+            });
+
+            });
+        </script>
     </body>
 </html>
