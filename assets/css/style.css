@@ -1,0 +1,17 @@
+body {
+    background-color: black;
+}
+
+input {
+    height: 200px;
+    width: 180px;
+}
+
+#message {
+    background-color: black;
+    color: red;
+}
+
+#crystal1, #crystal2, #crystal3, #crystal4 {
+    border: 5px solid white;
+}
